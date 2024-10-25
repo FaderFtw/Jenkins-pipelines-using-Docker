@@ -91,11 +91,17 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
-  remote_access {
-    source_security_group_ids = [aws_security_group.eks_worker_sg.id]
+  # Use launch template to attach the security group
+  launch_template {
+    id = aws_launch_template.eks_node.id
+    version = aws_launch_template.eks_node.latest_version
   }
+}
 
-  tags = {
-    Name = "eks-node-group-${var.cluster_name}"
-  }
+
+resource "aws_launch_template" "eks_node" {
+  name_prefix   = "eks-node-group"
+  instance_type = "t3.medium"  # or your desired instance type
+
+  vpc_security_group_ids = [aws_security_group.eks_worker_sg.id]
 }
