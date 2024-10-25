@@ -91,6 +91,11 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
-  // Specify the worker security group
-  node_group_security_group_ids = [aws_security_group.eks_worker_sg.id]
+  remote_access {
+    source_security_group_ids = [aws_security_group.eks_worker_sg.id]
+  }
+
+  tags = {
+    Name = "eks-node-group-${var.cluster_name}"
+  }
 }
