@@ -91,9 +91,4 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
-  remote_access {
-    ec2_ssh_key = var.ec2_key_name
-    source_security_group_ids = [aws_security_group.eks_worker_sg.id]
-  }
-
 }
