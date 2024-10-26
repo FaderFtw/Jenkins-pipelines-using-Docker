@@ -28,6 +28,11 @@ variable "vpc_id" {
   default     = "vpc-0548d3a81f601cd7b"  # Remplacez par votre ID de VPC réel
 }
 
+variable "ec2_key_name" {
+  description = "Name of the EC2 key pair for SSH access to worker nodes"
+  type        = string
+}
+
 #variable "vpc_cidr" {
 #  description = "CIDR block for the VPC"
 #  type        = string
