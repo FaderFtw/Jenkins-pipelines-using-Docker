@@ -79,6 +79,40 @@ resource "aws_eks_cluster" "my_cluster" {
   }
 }
 
+
+data "aws_eks_cluster" "existing" {
+  name = aws_eks_cluster.my_cluster.name
+}
+
+#
+resource "aws_security_group_rule" "worker_port_8083" {
+  type              = "ingress"
+  from_port         = 8083
+  to_port           = 8083
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id
+}
+
+resource "aws_security_group_rule" "worker_port_30000" {
+  type              = "ingress"
+  from_port         = 30000
+  to_port           = 30000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id
+}
+
+
+resource "aws_security_group_rule" "worker_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id
+}
+
 resource "aws_eks_node_group" "my_node_group" {
   cluster_name    = aws_eks_cluster.my_cluster.name
   node_group_name = "NodeGroup"
@@ -91,4 +125,10 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
+  # Optional: Add instance type configuration
+  instance_types = ["t3.medium"]  # You can modify this based on your needs
+
+  depends_on = [
+    aws_eks_cluster.my_cluster
+  ]
 }
