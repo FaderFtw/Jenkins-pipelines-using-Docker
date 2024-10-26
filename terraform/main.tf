@@ -12,7 +12,7 @@ resource "aws_eks_cluster" "my_cluster" {
   version  = "1.30"
 
   vpc_config {
-    subnet_ids         = var.subnet_ids
+    subnet_ids= var.subnet_ids
   }
 }
 
