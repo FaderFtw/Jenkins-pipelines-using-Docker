@@ -125,9 +125,6 @@ resource "aws_eks_node_group" "my_node_group" {
     min_size     = 1
   }
 
-  # Optional: Add instance type configuration
-  instance_types = ["t3.medium"]  # You can modify this based on your needs
-
   depends_on = [
     aws_eks_cluster.my_cluster
   ]
