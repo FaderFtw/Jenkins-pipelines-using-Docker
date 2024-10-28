@@ -20,17 +20,17 @@ variable "role_arn" {
 #variable "subnet_ids" {
 #  description = "IDs des sous-réseaux"
 #  type        = list(string)
-#  default     = ["subnet-01bab7b70085ae6b9", "subnet-0efcd7c258be99d62"]  # Valeurs par défaut
+#  default     = ["subnet-036b3fabc1a129cd2", "subnet-09b7594bcd31dec3c"]  # Valeurs par défaut
 #}
 
 #variable "vpc_id" {
 #  description = "L'ID du VPC pour le cluster EKS"
 #  type        = string
-#  default     = "vpc-042e0a5928f420d97"  # Remplacez par votre ID de VPC réel
+#  default     = "vpc-0548d3a81f601cd7b"  # Remplacez par votre ID de VPC réel
 #}
 
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
-  default     = "10.0.0.0/24"  # Modifiez-le selon vos besoins
+  default     = "10.0.0.0/16"  # Modifiez-le selon vos besoins
 }
